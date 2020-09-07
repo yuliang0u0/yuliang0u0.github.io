@@ -45,7 +45,7 @@
 <img src="/2020/09/02/Idea%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%A4%96%E9%83%A8jar%E5%8C%85%E5%88%B0%E9%A1%B9%E7%9B%AE/image-20200902192510801.png" class="">
 
 <h1 id="快捷方式"><a href="#快捷方式" class="headerlink" title="快捷方式"></a>快捷方式</h1><p>在传统方式第一步手动拷贝jar包到指定位置之后，直接右击选择add as library，再选择仅在所在模块使用还是整个项目中使用。</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-09-02T10:10:29.000Z" title="2020-09-02T10:10:29.000Z">2020-09-02</time>发表</span><span class="level-item"><time dateTime="2020-09-02T11:32:35.704Z" title="2020-09-02T11:32:35.704Z">2020-09-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/JavaWeb/">JavaWeb</a></span><span class="level-item">6 分钟读完 (大约958个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2020/09/02/%E5%B0%86Web%E5%B7%A5%E7%A8%8B%E9%83%A8%E7%BD%B2%E5%88%B0Tomcat%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F/">将Web工程部署到Tomcat的四种方式</a></h1><div class="content"><h1 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h1><p>直接将项目文件夹（例如hello文件夹，其中含一个hello.html）放到tomcat根目录下的webapps目录下即可。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-09-02T10:10:29.000Z" title="2020-09-02T10:10:29.000Z">2020-09-02</time>发表</span><span class="level-item"><time dateTime="2020-09-07T01:31:45.361Z" title="2020-09-07T01:31:45.361Z">2020-09-07</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/JavaWeb/">JavaWeb</a></span><span class="level-item">8 分钟读完 (大约1248个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2020/09/02/%E5%B0%86Web%E5%B7%A5%E7%A8%8B%E9%83%A8%E7%BD%B2%E5%88%B0Tomcat%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F/">将Web工程部署到Tomcat的四种方式</a></h1><div class="content"><h1 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h1><p>直接将项目文件夹（例如hello文件夹，其中含一个hello.html）放到tomcat根目录下的webapps目录下即可。</p>
 <p>访问方式 <code>http://localhost:8080/hello/hello.html</code></p>
 <ul>
 <li><p>规则为协议://IP:端口/项目文件夹/XXX文件名</p>
@@ -104,6 +104,19 @@
 <img src="/2020/09/02/%E5%B0%86Web%E5%B7%A5%E7%A8%8B%E9%83%A8%E7%BD%B2%E5%88%B0Tomcat%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F/image-20200902184104464.png" class="">
 
 <p>第四步，配置完成后，点击服务器名右边运行按钮 访问<code>http://localhost:8080/index.jsp</code>即可看到页面内容（index.jsp是默认的首页，可以不在url中写出，它是在配置文件中被声明的）。</p>
+<p>Idea会为tomcat部署的每一个项目单独建立一份配置文件：</p>
+<ul>
+<li>启动服务器查看控制台的log：Using CATALINA_BASE: “C:\Users\yuliang\AppData\Local\JetBrains\IntelliJIdea2020.1\tomcat\Tomcat_8_5_31_JavaWebDemo_6”</li>
+<li>找到上面目录，发现每份配置文件目录下都有conf、logs、work目录</li>
+<li>在idea中编辑配置，修改端口和虚拟目录，再打开conf/server.xml 发现端口也改了， 打开Catalina/localhost 发现虚拟目录也相应改变了，说明是专门为此项目配置的</li>
+<li>打开Catalina/localhost下的xml文件 打开docBase的地址 看到动态web项目的目录结构</li>
+</ul>
+<p>Idea工作空间项目 和 tomcat部署的web项目（out/artifact）:</p>
+<ul>
+<li>tomcat真正访问的是<code>tomcat部署的web项目</code>，tomcat部署的web项目对应着<code>工作空间项目</code>的web目录下的所有资源</li>
+<li>WEB-INF目录下的资源不能被浏览器直接访问。可以通过其他技术被访问到</li>
+<li>web-INF下的classes存放从idea工作空间项目目录下的src里面的源代码编译来的字节码文件</li>
+</ul>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-08-31T08:15:52.000Z" title="2020-08-31T08:15:52.000Z">2020-08-31</time>发表</span><span class="level-item"><time dateTime="2020-08-31T10:56:19.147Z" title="2020-08-31T10:56:19.147Z">2020-08-31</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Blog/">Blog</a></span><span class="level-item">6 分钟读完 (大约905个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2020/08/31/%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/">搭建静态博客</a></h1><div class="content"><h1 id="软件准备"><a href="#软件准备" class="headerlink" title="软件准备"></a>软件准备</h1><h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><p>在<a target="_blank" rel="noopener" href="https://git-scm.com/">Git官网</a>进行下载，安装过程比较简单，使用默认选项下一步即可。</p>
 <p>安装成功后鼠标右键点击会出现Git Bash选项。</p>
 <h2 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a>Node.js</h2><p>在<a target="_blank" rel="noopener" href="https://nodejs.org/en/">Node.js官网</a>下载安装包，使用默认选项一步步安装即可。</p>
